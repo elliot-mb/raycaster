@@ -53,19 +53,22 @@ canvas.addEventListener('mouseup', (event) => {
 }); 
 
 function mainLoop(timestamp){
-    deltaTime = timestamp - lastTime; //calculates delta time (frame time)
-    lastTime = timestamp;
-
-    raycast.position = {x: mouseX, y: mouseY};
-
-    background();
-    raycast.update();
-    raycast.intersect(scene);
-    //if(dragging){scene.update();}
-    //scene.update();
-    scene.draw(ctx);
-    raycast.draw(ctx);
-    requestAnimationFrame(mainLoop);
+    /*setTimeout(function(){ slowed framerate to help sort out rendering bugs*/
+        deltaTime = timestamp - lastTime; //calculates delta time (frame time)
+        lastTime = timestamp;
+    
+        raycast.position = {x: mouseX, y: mouseY};
+    
+        background();
+        raycast.update();
+        raycast.intersect(scene);
+        //if(dragging){scene.update();}
+        //scene.update();
+        raycast.draw(ctx);
+        scene.draw(ctx);
+        
+        requestAnimationFrame(mainLoop);
+    /*}, 500);*/
 }
 
 mainLoop();

@@ -25,7 +25,7 @@ export default class Scene{
         ray.update(); //computes ABC for ray
         let intersects = [];
         this.lineSegments.forEach(segment =>{ //checks each wall in the scene
-            //segment.update(); //computes ABC for segment
+            segment.update(); //computes ABC for segment
 
             //computes intersection
             let denominator = (ray.A*segment.B - segment.A*ray.B);

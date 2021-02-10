@@ -6,8 +6,9 @@ export default class Raycast{
         this.rays = [];
         this.rayCoords = [];
         this.position = {x: x, y: y};
-        this.instance = 1000;
-        this.radius = 4000;
+        this.instance = 500;
+        this.radius = 2000;
+        //this.closestP = [];
     }
 
     generateRays(){ //generates rays radially around a point
@@ -25,9 +26,6 @@ export default class Raycast{
 
     intersect(scene){ //calculate intersections with scene
         scene.intersections = [];
-        scene.lineSegments.forEach(segment => {
-            segment.update();
-        })
         this.rays.forEach(ray =>{
             ray.intersections = scene.update(ray);
         });
@@ -38,7 +36,7 @@ export default class Raycast{
             ray.start = {x: this.position.x, y: this.position.y};
             ray.end = 
         });*/
-        for(let i=0; i < this.rayCoords.length; i++){
+        for(let i=0; i < this.rayCoords.length; i++){ //updates the origin of each ray
             this.rays[i].start = {x: this.position.x, y: this.position.y};
 
             let closestP;
@@ -47,8 +45,10 @@ export default class Raycast{
             let dx;
             let dy;
             this.rays[i].intersections.forEach(point =>{ //works out each intersection point and its distance from the ray's origin
-                dx = point[0]-this.position.x; 
-                dy = point[1]-this.position.y;
+                //dx = point[0]-this.position.x; //used to update rays on actual position, but since the new position takes some frames to draw, this can create
+                //dy = point[1]-this.position.y; //mistakes as lines are drawn through a wall which is closer to actual position, just not drawn position
+                dx = point[0]-this.rays[i].drawnOrigin.x; 
+                dy = point[1]-this.rays[i].drawnOrigin.y; //does distance caclulation from drawn position so as to not draw through walls when moving really fast
                 distance = Math.sqrt(dx*dx + dy*dy); //pythag
                 if(distance < temp){
                     temp = distance;
@@ -56,13 +56,23 @@ export default class Raycast{
                 }
             });
             this.rays[i].intersectionP = closestP; //set closest point to intersection point
-            this.rays[i].end = {x: this.rayCoords[i].x+this.position.x, y: this.rayCoords[i].y+this.position.y}; //endpoint of non-intersecting rays
+            this.rays[i].end = {x: this.rayCoords[i].x+this.position.x, y: this.rayCoords[i].y+this.position.y};
+             //endpoint of non-intersecting rays
         }
     }
 
     draw(ctx){
-        this.rays.forEach(ray =>{
-            if(ray.intersectionP){ray.drawIntersectingLine(ctx);}else{ray.drawLine(ctx);}
+        let i = 0
+        this.rays.forEach(ray =>{ 
+            ray.drawLine(ctx);  
+            ray.drawnOrigin = {x: this.position.x, y: this.position.y}; //these make the lines render in the right place, they update the line visual in the frame after its moved, and thus done the position calcualation
+            ray.drawnEndpoint = {x: this.rayCoords[i].x+this.position.x, y: this.rayCoords[i].y+this.position.y};
+            i++;
         });
+        
     }
 }
+
+//the drawnOrigin and drawnEndpoing of each ray update 2 frames after the actual position and actual endpoint update
+//this gives the program a frame to get the intersection calculation correct and convert any previously-non intersecting lines
+//to intersecting lines. this does mean its slightly less responsive ()

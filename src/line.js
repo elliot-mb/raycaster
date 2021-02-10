@@ -2,7 +2,7 @@ export default class LineSegment{
     constructor(point1, point2){
         this.start = point1;
         this.end = point2;
-        this.width = 2;
+        this.width = 4;
         this.visible = true
         this.A, this.B, this.C;
     }
@@ -27,7 +27,7 @@ export default class LineSegment{
         ctx.beginPath();
         ctx.moveTo(this.start.x, this.start.y);
         ctx.lineTo(this.end.x, this.end.y);
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#000000';
         ctx.lineWidth = this.width;
         ctx.stroke(); 
     }
