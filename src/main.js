@@ -15,7 +15,7 @@ function resizeCanvas(){
 }
 
 let deltaTime = 0, lastTime = 0;
-let mouseX, mouseY;
+let mouseX = 650, mouseY = 650;
 let dragging = false;
 let scene = new Scene();
 let raycast = new Raycast(150,150);
@@ -53,7 +53,7 @@ canvas.addEventListener('mouseup', (event) => {
 }); 
 
 function mainLoop(timestamp){
-    /*setTimeout(function(){ slowed framerate to help sort out rendering bugs*/
+    /*setTimeout(function(){*/ //slowed framerate to help sort out rendering bugs
         deltaTime = timestamp - lastTime; //calculates delta time (frame time)
         lastTime = timestamp;
     
@@ -68,12 +68,12 @@ function mainLoop(timestamp){
         scene.draw(ctx);
         
         requestAnimationFrame(mainLoop);
-    /*}, 500);*/
+    /*}, 5000);*/
 }
 
 mainLoop();
 
 function background(){
-    ctx.fillStyle = '#2C2F33';
+    ctx.fillStyle = '#000000';
     ctx.fillRect(0,0,canvas.width,canvas.height);
 }

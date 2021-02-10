@@ -6,6 +6,14 @@ export default class LineSegment{
         this.visible = true
         this.A, this.B, this.C;
     }
+    initialise(){ //scruffy way of getting round bad horizontal/vertical behavior (simple logic => better performance)
+        if(this.A == 0){
+            this.start.y += 0.01;
+        }
+        if(this.B == 0){
+            this.start.x += 0.01;
+        }
+    }
 
     update(){
         this.A = this.end.y - this.start.y;
@@ -27,7 +35,7 @@ export default class LineSegment{
         ctx.beginPath();
         ctx.moveTo(this.start.x, this.start.y);
         ctx.lineTo(this.end.x, this.end.y);
-        ctx.strokeStyle = '#000000';
+        ctx.strokeStyle = '#90c2df';
         ctx.lineWidth = this.width;
         ctx.stroke(); 
     }

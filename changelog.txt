@@ -1,0 +1,3 @@
+optimised
+added 'level'
+stopped lines from spawning perfectly horizontal or vertical

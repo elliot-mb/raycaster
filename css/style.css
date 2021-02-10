@@ -1,15 +1,17 @@
 html, body{
-    background-color: #2C2F33;
+    background-color: #90c2df;
     width: 100%;
     height: 100%;
     margin: 0;
-}
-#container{
     overflow: hidden;
+    font-family: Georgia, serif;
+    padding: 0px 10px 10px 10px;
 }
+
 #canvas{
     position: absolute; 
     top: 0px;
     left: 0px;
+    z-index: 0;
 }
 
