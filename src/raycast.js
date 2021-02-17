@@ -1,4 +1,3 @@
-import LineSegment from "/src/line.js";
 import Ray from "/src/ray.js";
 
 export default class Raycast{
@@ -13,6 +12,8 @@ export default class Raycast{
     }
 
     generateRays(){ //generates rays radially around a point
+        this.rays = [];
+        this.rayCoords = [];
         for(let i=0; i < this.instance; i++){
             let interval = 6.2832/this.instance; //interval is the amount of radians turned per ray cast
             let theta = (interval*i)+this.offset;
@@ -22,7 +23,7 @@ export default class Raycast{
             };
             this.rayCoords.push(endPoint);
             this.rays.push(new Ray({x: 0, y: 0}, {x: 0, y: 0}, i));
-            console.log(this.rays[i]);
+            //console.log(this.rays[i]);
         }
     }
 
@@ -30,7 +31,6 @@ export default class Raycast{
         this.rays.forEach(ray =>{
             ray.intersectionP = scene.update(ray);
         });
-        this.rays[0].intersectionP = scene.update(this.rays[0]);
         //console.log('check done');
     }
 
