@@ -68,7 +68,7 @@ function mainLoop(timestamp){
         scene.draw(ctx);
         
         requestAnimationFrame(mainLoop);
-    /*}, 5000);*/
+    /*}, 500);*/
 }
 
 mainLoop();

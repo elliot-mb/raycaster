@@ -4,19 +4,19 @@ import Intersection from "/src/intersection.js";
 
 export default class Scene{
     constructor(){ //Point(spawnx, spawny, draggable)
-        this.lineSegments = [new LineSegment(new Point(200,100,true), new Point(200,400,true)),
-            new LineSegment(new Point(100,400,true), new Point(100,100,true)),
-            new LineSegment(new Point(100,100,true), new Point(201,100,true)),
-            new LineSegment(new Point(100,450,true), new Point(1050,120,true)),
+        this.lineSegments = [new LineSegment(new Point(150.5,824,true), new Point(290,824,true)),
+            new LineSegment(new Point(290,824,true), new Point(288.5,660,true)),
+            new LineSegment(new Point(288.5,660,true), new Point(12,660,true)),
+            new LineSegment(new Point(12,660,true), new Point(11.5,18,true)),
             new LineSegment(new Point(200,150,true), new Point(650,550,true)),
-            new LineSegment(new Point(599,600,true), new Point(701,600,true)), //box
-            new LineSegment(new Point(700,599,true), new Point(700,701,true)),
-            new LineSegment(new Point(701,700,true), new Point(599,700,true)),
+            new LineSegment(new Point(599,500,true), new Point(801,700,true)), //box
+            new LineSegment(new Point(700,599,true), new Point(900,701,true)),
+            new LineSegment(new Point(900,790,true), new Point(559,700,true)),
             new LineSegment(new Point(600,701,true), new Point(600,599,true)), //box end
             new LineSegment(new Point(899,300,true), new Point(951,300,true)), //rectangle
             new LineSegment(new Point(950,299,true), new Point(950,601,true)),
-            new LineSegment(new Point(951,600,true), new Point(899,600,true)),
-            new LineSegment(new Point(900,601,true), new Point(899,299,true))]; //walls in the scene
+            new LineSegment(new Point(900,800,true), new Point(1000,650,true)),
+            new LineSegment(new Point(950,901,true), new Point(899,299,true))]; //walls in the scene
         this.points;
         //this.intersections = []; //intersection is never draggable but inherits from point
         this.isIntersecting = false;

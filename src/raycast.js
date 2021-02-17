@@ -7,20 +7,22 @@ export default class Raycast{
         this.rayCoords = [];
         this.position = {x: x, y: y};
         this.instance = 500;
-        this.radius = 2000;
+        this.radius = 3000;
+        this.offset = 0.7854;//0.7854; //offset for all generated rays, which circumvents the issue i had where sometimes the first ray generated would phase through walls for some reason
         //this.closestP = [];
     }
 
     generateRays(){ //generates rays radially around a point
         for(let i=0; i < this.instance; i++){
             let interval = 6.2832/this.instance; //interval is the amount of radians turned per ray cast
-            let theta = interval*i;
+            let theta = (interval*i)+this.offset;
             let endPoint = {
-                x: Math.sin(theta)*this.radius, //generates a circle of points for the ends of the line segments
-                y: Math.cos(theta)*this.radius
+                x: Math.cos(theta)*this.radius, //generates a circle of points for the ends of the line segments
+                y: Math.sin(theta)*this.radius
             };
             this.rayCoords.push(endPoint);
-            this.rays.push(new Ray({x: 0, y: 0}, {x: 0, y: 0}));
+            this.rays.push(new Ray({x: 0, y: 0}, {x: 0, y: 0}, i));
+            console.log(this.rays[i]);
         }
     }
 
@@ -28,7 +30,8 @@ export default class Raycast{
         this.rays.forEach(ray =>{
             ray.intersectionP = scene.update(ray);
         });
-        console.log('check done');
+        this.rays[0].intersectionP = scene.update(this.rays[0]);
+        //console.log('check done');
     }
 
     update(){
@@ -56,3 +59,6 @@ export default class Raycast{
 //that everything works perfectly now on actual position!!!
 //this optimisation had a domino effect, so now the code is more efficient and the raycast updates every frame, rather than 2 frames
 //after each position update! woo! responsive! efficient! (more formal explanation in changelog)
+
+//for polycasting you could check the segment each ray intersects with, then see which of the two points on that segment are furthest from each other 
+//determining this means i could draw a polygon with verticies as the generated pairs
