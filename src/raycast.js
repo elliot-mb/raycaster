@@ -5,10 +5,13 @@ export default class Raycast{
         this.rays = [];
         this.rayCoords = [];
         this.position = {x: x, y: y};
-        this.instance = 500;
+        this.instance = 1000;
         this.radius = 3000;
         this.offset = 0.7854;//0.7854; //offset for all generated rays, which circumvents the issue i had where sometimes the first ray generated would phase through walls for some reason
         //this.closestP = [];
+        this.points = [];
+        this.renderState = 0;
+        this.modRenderState;
     }
 
     generateRays(){ //generates rays radially around a point
@@ -28,8 +31,9 @@ export default class Raycast{
     }
 
     intersect(scene){ //calculate intersections with scene
+        this.points = [], scene.previousPoint = undefined, scene.currentLine = -1; //previous point must be set to undefined else we get a residual point when theres a segment change
         this.rays.forEach(ray =>{
-            ray.intersectionP = scene.update(ray);
+            ray.intersectionP = scene.update(ray, this.points);
         });
         //console.log('check done');
     }
@@ -43,10 +47,59 @@ export default class Raycast{
     }
 
     draw(ctx){
-        this.rays.forEach(ray =>{ 
-            ray.drawLine(ctx);
-        });
-        
+        //this.rays.forEach(ray =>{ 
+            //ray.drawLine(ctx);
+        //});
+        this.modRenderState = this.renderState%4;
+        switch(this.modRenderState){ //render states
+            case 0:
+                this.rays.forEach(ray =>{ 
+                    ray.drawLine(ctx);
+                });
+                console.log('just the rays');
+                break;
+            case 1:
+                this.drawOutline(ctx);
+                console.log('just the outline');
+                break;
+            case 2:
+                this.rays.forEach(ray =>{ 
+                    ray.drawLine(ctx);
+                });
+                this.drawOutline(ctx);
+                console.log('rays and outline');
+                break;
+            case 3:
+                this.drawFilled(ctx);
+                console.log('filled');
+                break;
+            default:
+                break;
+        }
+    }
+
+    drawOutline(ctx){
+        if(this.rays[this.rays.length-1].intersectionP){this.points.push([this.rays[this.rays.length-1].intersectionP[0],this.rays[this.rays.length-1].intersectionP[1]]);} //bridges the gap between sweeps that causes loss of previousPoint
+        ctx.beginPath();
+        for(let i = 0; i < this.points.length; i++){
+            if(this.points[i]){ctx.lineTo(this.points[i][0], this.points[i][1]);}
+            if(i > this.rays.length){i = this.this.points.length;}
+        }
+        ctx.closePath();
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 6;
+        ctx.stroke();
+    }
+
+    drawFilled(ctx){
+        if(this.rays[this.rays.length-1].intersectionP){this.points.push([this.rays[this.rays.length-1].intersectionP[0],this.rays[this.rays.length-1].intersectionP[1]]);} //bridges the gap between sweeps that causes loss of previousPoint
+        ctx.beginPath();
+        for(let i = 0; i < this.points.length; i++){
+            if(this.points[i]){ctx.lineTo(this.points[i][0], this.points[i][1]);}
+        }
+        ctx.closePath();
+        ctx.fillStyle = '#999999';
+        ctx.fill();
     }
 }
 

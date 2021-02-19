@@ -14,7 +14,7 @@ export default class Ray extends LineSegment{
         ctx.moveTo(this.start.x, this.start.y);
         if(this.intersectionP){ctx.lineTo(this.intersectionP[0], this.intersectionP[1]);}
         else{ctx.lineTo(this.end.x, this.end.y);}
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#cccccc';
         ctx.lineWidth = this.width;
         ctx.stroke();
         //if(this.intersectionP == undefined){console.log(`im not intersecting, im ray ${this.id}`);}

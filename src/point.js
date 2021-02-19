@@ -29,7 +29,7 @@ export default class Point{
     }
 
     draw(ctx){
-        if(this.visible){
+        if(this.visible && this.draggable){
             ctx.beginPath(); 
             ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false); 
             ctx.fillStyle = 'rgba(255,255,255,0.5)';
