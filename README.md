@@ -1,5 +1,4 @@
-# raycaster
-naive approach to raycasting in javascript
-## try this app out on [my website](https://elliotsemicolon.github.io/projects/raycaster/index.html "raycaster")
-deployment currently set up to cast a high number of rays\
-if you're getting performance issues, it will be because the ray count ('instances') is too high and can be manually decresed in raycast.js
+# Raycaster
+My naive approach to raycasting in javascript using line-line intersection instead of raymarching.
+## Try this app out
+[Visit deployment](https://elliot-mb.github.io/raycaster/)\
