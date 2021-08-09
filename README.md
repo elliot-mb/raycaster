@@ -1,5 +1,6 @@
 # Raycaster
-My naive approach to raycasting in javascript using line-line intersection instead of raymarching.
+My naive approach to raycasting in javascript using line-line intersection instead of raymarching.\
+I made the decision to use line-line intersection as it's more mathematically involved and potentially more efficient computationally.
 ## Try this app out
 [Visit deployment](https://elliot-mb.github.io/raycaster/)\
 Example of the 4 different rendering modes\
